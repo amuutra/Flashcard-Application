@@ -110,6 +110,7 @@ public class CardCreationScreen extends JPanel {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
+				control.createNewCardSet();
 				createCards();
 				control.saveFile();
 			}		
@@ -138,7 +139,6 @@ public class CardCreationScreen extends JPanel {
 		
 		}
 	
-
 	
 /*			
  * 		Add card creation panel
