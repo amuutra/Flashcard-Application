@@ -1,7 +1,9 @@
 package m;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Observable;
+import java.util.Random;
 
 public class CardSet extends Observable {
 	
@@ -10,50 +12,45 @@ public class CardSet extends Observable {
 	private ArrayList<FlashCard> currentCardSet;
 	private ArrayList<FlashCard> learnedCards;
 	private FlashCard currentCard;
-
+	private Random rand;
+	
 	public CardSet(CramModelManager cramModel) {
 		model = cramModel;
+		rand = new Random();
+	}
+	
+	public int getCurrentLowestLevel() {
+		
+		int result = 0;
+		
+		for(int i = 0; i<currentCardSet.size(); i++) {
+			
+			if(i == 0) {
+				result = currentCardSet.get(i).getCurrentLevel();
+			} else if(currentCardSet.get(i).getCurrentLevel() < result) {
+				result = currentCardSet.get(i).getCurrentLevel();
+			}
+		}
+		
+		return result;
 	}
 	
 	//Returns the first card at the lowest learned level
 	public FlashCard getNextCard() {
 			
+		int lowestLevel = getCurrentLowestLevel();
+		ArrayList<FlashCard> lowestCards = new ArrayList<FlashCard>();
+	
 		for(int i = 0; i<currentCardSet.size(); i++) {
-			if(currentCardSet.get(i).getCurrentLevel() == 1) {
+			if(currentCardSet.get(i).getCurrentLevel() == lowestLevel ) {
 				currentCard = currentCardSet.get(i);
-				return currentCardSet.get(i);
+				lowestCards.add(currentCard);
 			}
 		}
 		
-		for(int i = 0; i<currentCardSet.size(); i++) {
-			if(currentCardSet.get(i).getCurrentLevel() == 2) {
-				currentCard = currentCardSet.get(i);
-				return currentCardSet.get(i);
-			}
-		}
-		
-		for(int i = 0; i<currentCardSet.size(); i++) {
-			if(currentCardSet.get(i).getCurrentLevel() == 3) {
-				currentCard = currentCardSet.get(i);
-				return currentCardSet.get(i);
-			}
-		}
-		
-		for(int i = 0; i<currentCardSet.size(); i++) {
-			if(currentCardSet.get(i).getCurrentLevel() == 4) {
-				currentCard = currentCardSet.get(i);
-				return currentCardSet.get(i);
-			}
-		}
-		
-		for(int i = 0; i<currentCardSet.size(); i++) {
-			if(currentCardSet.get(i).getCurrentLevel() == 5) {
-				currentCard = currentCardSet.get(i);
-				return currentCardSet.get(i);
-			}
-		}
-		
-		return currentCardSet.get(0);
+		rand.nextInt(lowestCards.size());
+		currentCard = lowestCards.get(rand.nextInt(lowestCards.size()));
+		return lowestCards.get(rand.nextInt(lowestCards.size()));
 	}
 	
 	private void saveFile() {
