@@ -50,7 +50,7 @@ public class CardSet extends Observable {
 		
 		rand.nextInt(lowestCards.size());
 		currentCard = lowestCards.get(rand.nextInt(lowestCards.size()));
-		return lowestCards.get(rand.nextInt(lowestCards.size()));
+		return currentCard;
 	}
 	
 	private void saveFile() {
