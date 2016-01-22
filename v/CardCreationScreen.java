@@ -23,24 +23,25 @@ import c.CramController;
 
 public class CardCreationScreen extends JPanel {
 	
+	private CramController control;
+	
 	private JTextArea cardASideText;
 	private JTextArea cardBSideText;
 	private JButton addNewCardButton;
 	private JButton createNewSet;
 	private JButton openExistingSet;
-	private CramController control;
 	private JButton backButton;
 	private JButton saveSet;
 	private JPanel cardAddingPanel;
 	private JPanel startingPanel;
-	private JScrollPane scrollingPanel;	
 	private JPanel cardCreationPanel;	
+	private JScrollPane scrollingPanel;	
 	
 	private ArrayList<JPanel> cardCreationPanels;
 	
 	public CardCreationScreen(CramController cramControl) {
 
-		cardCreationPanels = new ArrayList();
+		cardCreationPanels = new ArrayList<JPanel>();
 		
 		control = cramControl;
 		addStartingPanel();
@@ -132,7 +133,6 @@ public class CardCreationScreen extends JPanel {
 			}	
 		});
 		
-		
 		c.gridx = 0;
 		c.gridy = 0;
 		
@@ -176,12 +176,9 @@ public class CardCreationScreen extends JPanel {
 			addCardCreationPanel(CardSet.get(i).getCardASide(), CardSet.get(i).getCardBSide());
 		}
 		
-		}
+	}
 	
 	
-/*			
- * 		Add card creation panel
- */
 	int x = 0;
 	private void addCardCreationPanel(String ASideText, String BSideText) {
 		
@@ -248,29 +245,9 @@ public class CardCreationScreen extends JPanel {
 			}
 			
 		});
-		
-	/*	submitButton = new JButton("Submit");
-		
-		submitButton.addActionListener(new ActionListener() {
-
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				createCard(cardASideText.getText(), cardBSideText.getText());
-				addCardCreationPanel(" ", " ");
-						
-				SwingUtilities.invokeLater(new Runnable() {
-					  public void run() {
-					   scrollingPanel.getVerticalScrollBar().setValue(scrollingPanel.getVerticalScrollBar().getMaximum());
-					  }
-					 }
-					);
-				
-			}		
-		});   */
-	
+			
 		cardCreationPanel.add(cardASideInputScroller);
 		cardCreationPanel.add(cardBSideInputScroller);
-		//cardCreationPanel.add(submitButton);
 		
 		cardAddingPanel.add(cardCreationPanel);
 		
@@ -281,9 +258,6 @@ public class CardCreationScreen extends JPanel {
 		}
 		
 		cardASideText.grabFocus();
-	/*	scrollingPanel.repaint();
-		this.repaint();
-		this.revalidate(); */
 		scrollingPanel.revalidate();		
 	}		
 	
