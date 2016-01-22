@@ -1,22 +1,13 @@
 package v;
 
-import java.awt.BorderLayout;
-import java.awt.GridBagConstraints;
-import java.awt.GridBagLayout;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.Observable;
-import java.util.Observer;
 
-import javax.swing.BoxLayout;
-import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JButton;
-import javax.swing.SwingUtilities;
 
 import c.CramController;
-
 
 public class MainMenu extends JPanel {
 
@@ -24,7 +15,6 @@ public class MainMenu extends JPanel {
 	private JButton createCards;
 
 	private CramViewManager parentView;
-	
 	private CramController control;
 	
 	public MainMenu(CramViewManager parent, CramController cramControl) {
@@ -44,28 +34,18 @@ public class MainMenu extends JPanel {
 
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
-				// TODO Auto-generated method stub
 
 				if(control.checkCardSource() == true) {
 					parentView.showStudyingScreen();
 				} else {
 					
-					control.selectCardSource();
+				control.selectCardSource();
 					
-					if(control.checkCardSource() == true) {
-						parentView.showStudyingScreen();
-					} else {
-						
-					}
-					
-					
-					
+				if(control.checkCardSource() == true) {
+					parentView.showStudyingScreen();
 				}
 					
-			}
-			
-		});
-		
+		}}});
 		
 		createCards = new JButton("Edit cards");
 		this.add(createCards);
@@ -76,16 +56,7 @@ public class MainMenu extends JPanel {
 				parentView.showCardCreationScreen();
 			}
 		});
-		
-		
-
-		
-		
+			
 	}
-
-	
-
-
-		
 	
 }
