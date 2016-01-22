@@ -1,5 +1,7 @@
 package v;
 
+import java.awt.GridBagConstraints;
+import java.awt.GridBagLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
@@ -23,7 +25,7 @@ public class CardCreationScreen extends JPanel {
 	
 	private JTextArea cardASideText;
 	private JTextArea cardBSideText;
-	//private JButton submitButton;
+	private JButton addNewCardButton;
 	private JButton createNewSet;
 	private JButton openExistingSet;
 	private CramController control;
@@ -58,8 +60,11 @@ public class CardCreationScreen extends JPanel {
 
 		startingPanel = new JPanel();
 	
-		BoxLayout layout = new BoxLayout(this, BoxLayout.Y_AXIS);
-		this.setLayout(layout);
+		GridBagLayout layout = new GridBagLayout();
+		GridBagConstraints c = new GridBagConstraints();
+		startingPanel.setLayout(layout);
+		
+		this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
 
 		createNewSet = new JButton("Create new set");
 		openExistingSet = new JButton("Open existing set");
@@ -73,6 +78,7 @@ public class CardCreationScreen extends JPanel {
 				addCardCreationPanel("", "");
 				control.createNewCardSet();
 				saveSet.setEnabled(true);
+				addNewCardButton.setEnabled(true);
 			}
 			
 		});
@@ -116,10 +122,43 @@ public class CardCreationScreen extends JPanel {
 			}		
 		});
 		
-		startingPanel.add(createNewSet);
-		startingPanel.add(openExistingSet);
-		startingPanel.add(backButton);
-		startingPanel.add(saveSet);
+		addNewCardButton = new JButton("Add new card");
+		addNewCardButton.setEnabled(false);
+		addNewCardButton.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				addCardCreationPanel("", "");
+			}	
+		});
+		
+		
+		c.gridx = 0;
+		c.gridy = 0;
+		
+		startingPanel.add(createNewSet, c);
+		
+		c.gridx = 1;
+		c.gridy = 0;
+		
+		startingPanel.add(openExistingSet, c);
+		
+		c.gridx = 2;
+		c.gridy = 0;
+		
+		startingPanel.add(backButton, c);
+		
+		c.gridx = 3;
+		c.gridy = 0;
+		
+		startingPanel.add(saveSet, c);
+		
+		c.gridx = 0;
+		c.gridy = 1;
+		c.gridwidth = 4;
+		c.fill = GridBagConstraints.HORIZONTAL;
+		
+		startingPanel.add(addNewCardButton, c);
 		
 		this.add(startingPanel);
 
