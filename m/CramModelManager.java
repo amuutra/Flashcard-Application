@@ -14,6 +14,10 @@ public class CramModelManager {
 		setBuilder = new CardSet(this);	
 	}
 	
+	public void saveFileProgress() {
+		fileManager.saveFileProgress();
+	}
+	
 	public FlashCard getNextCard() {
 		return setBuilder.getNextCard();
 	}
@@ -23,10 +27,10 @@ public class CramModelManager {
 	}
 	
 	public void selectCardSource() {
-		fileManager.selectAFile();
+		fileManager.checkSelectedFile(fileManager.openAFile());
 	}
-	
-	public void setCurrentCards(ArrayList<FlashCard> set) {
+		
+	public void setCurrentCardset(ArrayList<FlashCard> set) {
 		setBuilder.setCurrentSet(set);
 	}
 	
