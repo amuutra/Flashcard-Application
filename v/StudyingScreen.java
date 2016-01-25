@@ -1,6 +1,5 @@
 package v;
 
-import java.awt.Color;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.event.ActionEvent;
@@ -11,14 +10,16 @@ import java.util.Observer;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
+import javax.swing.JTextArea;
 
 import m.FlashCard;
 import c.CramController;
 
 public class StudyingScreen extends JPanel implements Observer {
 
-	private JLabel cardASide;
-	private JLabel cardBSide;
+	private JTextArea cardASide;
+	private JTextArea cardBSide;
 	
 	private JButton revealAnswer;	
 	private JButton wasCorrect;
@@ -35,6 +36,7 @@ public class StudyingScreen extends JPanel implements Observer {
 	public StudyingScreen(CramController cramControl) {
 		control = cramControl;
 		addComponents();
+		
 		currentCard = control.getNextCard();
 		setCardInfo();
 	}
@@ -53,7 +55,7 @@ public class StudyingScreen extends JPanel implements Observer {
 			
 		wasCorrect.setEnabled(false);
 		wasIncorrect.setEnabled(false);
-		
+				
 		this.revalidate();
 		this.repaint();
 	}
@@ -64,10 +66,15 @@ public class StudyingScreen extends JPanel implements Observer {
 		GridBagConstraints c = new GridBagConstraints();
 		this.setLayout(layout);
 		
-		cardASide = new JLabel("...");
-		cardASide.setBackground(Color.GREEN);
-		cardBSide = new JLabel("...");
-		cardBSide.setBackground(Color.RED);
+		cardASide = new JTextArea(5,20);
+		cardBSide = new JTextArea(5,20);
+		cardASide.setLineWrap(true);
+		cardBSide.setLineWrap(true);
+		cardASide.setFocusable(false);
+		cardBSide.setFocusable(false);
+		
+		JScrollPane aSideScroll = new JScrollPane(cardASide);
+		JScrollPane bSideScroll = new JScrollPane(cardBSide);
 		
 		revealAnswer = new JButton("Reveal answer");
 		
@@ -78,10 +85,10 @@ public class StudyingScreen extends JPanel implements Observer {
 				wasCorrect.setEnabled(true);
 				wasIncorrect.setEnabled(true);
 				cardBSide.setText(currentCard.getCardBSide());
+				control.saveFileProgress();
 			}
 			
 		});
-		
 		
 		wasCorrect = new JButton("Mark correct");
 		wasCorrect.setEnabled(false);
@@ -114,12 +121,12 @@ public class StudyingScreen extends JPanel implements Observer {
 		c.gridx = 0;
 		c.gridy = 0;
 		c.gridwidth = 3;
-		this.add(cardASide, c);
+		this.add(aSideScroll, c);
 		
 		c.gridx = 0;
 		c.gridy = 1;
 		c.gridwidth = 3;
-		this.add(cardBSide, c);
+		this.add(bSideScroll, c);
 		
 		c.gridx = 0;
 		c.gridy = 2;
@@ -153,9 +160,7 @@ public class StudyingScreen extends JPanel implements Observer {
 				switchActiveSide.setText("Switch active side (Currently: " + getActiveCardSide() + ")");
 				setCardInfo();
 								
-			}
-			
-		});
+			}});
 		
 		c.gridx = 0;
 		c.gridy = 3;
