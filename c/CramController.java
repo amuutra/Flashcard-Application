@@ -18,6 +18,10 @@ public class CramController {
 		view.addController(this);
 	}
 	
+	public void saveFileProgress() {
+		model.saveFileProgress();
+	}
+	
 	public FlashCard getNextCard() {
 		return model.getNextCard();
 	}
@@ -30,7 +34,7 @@ public class CramController {
 		model.saveFile();
 	}
 	
-	public boolean checkCardSource() {
+	public boolean cardFileExists() {
 		
 		if (model.cardFileExists()) {
 			return true;
