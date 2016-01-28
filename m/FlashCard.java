@@ -37,9 +37,9 @@ public class FlashCard implements Serializable {
 		cardSideB = input;
 	}
 	
+	
 	public void answeredCorrectly() {
 		currentLevel = currentLevel + 1;
-		answeredCorrectly = answeredCorrectly + 1;
 		
 		if(currentLevel == 5) {
 			learned = true;

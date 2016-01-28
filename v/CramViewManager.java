@@ -14,11 +14,13 @@ public class CramViewManager {
 	private CardCreationScreen cardScreen;
 	
 	private CramModelManager model;
+	
 	private CramController control;
 	
 	public CramViewManager() {
-		mainFrame = new JFrame("Flashcard Application");
+		mainFrame = new JFrame();
 		mainFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		mainFrame.setLocationRelativeTo(null);
 	}
 	
 	public JFrame getFrame() {
@@ -46,6 +48,7 @@ public class CramViewManager {
 		mainFrame.add(studyscreen);
 		
 		mainFrame.pack();
+		mainFrame.setLocationRelativeTo(null);
 		mainFrame.setVisible(true);
 		
 	}
@@ -58,6 +61,7 @@ public class CramViewManager {
 		
 		mainFrame.setResizable(false);
 		mainFrame.pack();
+		mainFrame.setLocationRelativeTo(null);
 		mainFrame.setVisible(true);
 		
 	}

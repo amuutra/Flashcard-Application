@@ -1,29 +1,30 @@
 package m;
 
 import java.util.Observable;
+import java.util.Observer;
 
 public class StudyingModel extends Observable {
 
 	private CardSet currentCards;
 	private FlashCard currentCard;
 	
-	public StudyingModel(CardSet currentSet) {
+	public StudyingModel(CardSet currentSet ) {
 		currentCards = currentSet;
 	}
-		
+	
 	public void setCardSet(CardSet setToSet) {
 		currentCards = setToSet;
+
 	}
 	
 	public void startStudying() {
 		getNextCard();
 	}
 	
-	public FlashCard getNextCard() {
+	private void getNextCard() {
 		currentCard = currentCards.getNextCard();
 		this.setChanged();
 		this.notifyObservers(currentCard);
-		return currentCard;
 	}
 	
 	public void markCorrect() {
@@ -33,5 +34,7 @@ public class StudyingModel extends Observable {
 	public void markIncorrect() {
 		currentCards.getCurrentCard().answeredIncorrectly();
 	}
+
+	
 	
 }
