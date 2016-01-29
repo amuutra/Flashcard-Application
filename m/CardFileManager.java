@@ -20,7 +20,6 @@ public class CardFileManager extends Observable {
 
 	private File currentCardSourceFile;
 	private JFileChooser fileSelecter;
-	
 	private CramModelManager model;
 	
 	public CardFileManager(CramModelManager parentModel) {
@@ -73,28 +72,17 @@ public class CardFileManager extends Observable {
 				e.printStackTrace();
 			} 
 			
-					
 	}
 	
-	
-	public boolean cardSourceExists() {
-		
+	public boolean cardSourceExists() {	
 		if(currentCardSourceFile == null) {
 			return false;
 		} else {
 			return true;
 		}
-
 	}
 	
-	public void saveFile(ArrayList<FlashCard> fileToSave) {
-			
-		JFileChooser saveDialog = new JFileChooser();
-		
-		JFrame mainFrame = new JFrame();
-		saveDialog.showSaveDialog(mainFrame);
-		
-		File file = saveDialog.getSelectedFile();
+	public void outputFile(ArrayList<FlashCard> fileToSave, File file) {
 		
 		 try {
 			 
@@ -103,25 +91,15 @@ public class CardFileManager extends Observable {
 			 if(file.toString().endsWith(".CRAMCARDS")) {
 				fileOut = new FileOutputStream(file); 
 			 } else {
-				fileOut = new FileOutputStream(file + ".CRAMCARDS");	 
+				file = new File(file + ".CRAMCARDS");
+				fileOut = new FileOutputStream(file);	 
 			 }
 	        
 	         ObjectOutputStream out = new ObjectOutputStream(fileOut);
-	      
-	         if(file.exists()) {
-	        	 int x = JOptionPane.showConfirmDialog(null, "File exists, overwrite?", "Overwrite file", JOptionPane.YES_NO_OPTION);
+			 out.writeObject(fileToSave);
 	        	 
-	        	 if (x == JOptionPane.YES_OPTION) {
-			         out.writeObject(fileToSave);
-	        	 }
-	        	 
-	         } else {
-		         out.writeObject(fileToSave);	        	 
-	         }
-
 	         out.close();
 	         fileOut.close();
-
 	         currentCardSourceFile = file;
 	         this.setChanged();
 	         this.notifyObservers(true);
@@ -129,7 +107,25 @@ public class CardFileManager extends Observable {
 	     } catch (IOException i) {
 
 	     }
+		
+	}
 	
+	public void saveFile(ArrayList<FlashCard> fileToSave) {
+		
+		File file = openAFile();
+		
+		if(file.exists()) {
+			
+		int x = JOptionPane.showConfirmDialog(null, "File exists, overwrite?", "Overwrite file", JOptionPane.YES_NO_OPTION);
+       	
+        if (x == JOptionPane.YES_OPTION) {
+	       outputFile(fileToSave, file);
+       	}
+			
+		} else {
+		   outputFile(fileToSave, file);
+		}
+		
 	}
 		
 	public void addAnObserver(Observer observer) {
@@ -141,6 +137,7 @@ public class CardFileManager extends Observable {
 	}
 	
 	public void checkSelectedFile(File selectedFile) {
+		
 		if(selectedFile == null) {
 			this.setChanged();
 			this.notifyObservers(false);
