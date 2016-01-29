@@ -13,7 +13,6 @@ public class MainMenu extends JPanel {
 
 	private JButton startStudying;
 	private JButton createCards;
-
 	private CramViewManager parentView;
 	private CramController control;
 	
@@ -35,13 +34,13 @@ public class MainMenu extends JPanel {
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
 
-				if(control.checkCardSource() == true) {
+				if(control.cardFileExists() == true) {
 					parentView.showStudyingScreen();
 				} else {
 					
 				control.selectCardSource();
 					
-				if(control.checkCardSource() == true) {
+				if(control.cardFileExists() == true) {
 					parentView.showStudyingScreen();
 				}
 					

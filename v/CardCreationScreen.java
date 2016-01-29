@@ -36,6 +36,7 @@ public class CardCreationScreen extends JPanel {
 	private JPanel startingPanel;
 	private JPanel cardCreationPanel;	
 	private JScrollPane scrollingPanel;	
+	private int panelsCreated = 0;
 	
 	private ArrayList<JPanel> cardCreationPanels;
 	
@@ -130,6 +131,12 @@ public class CardCreationScreen extends JPanel {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				addCardCreationPanel("", "");
+				
+				SwingUtilities.invokeLater(new Runnable() {
+					  public void run() {
+					   scrollingPanel.getVerticalScrollBar().setValue(scrollingPanel.getVerticalScrollBar().getMaximum());
+					  }
+					 });
 			}	
 		});
 		
@@ -164,10 +171,6 @@ public class CardCreationScreen extends JPanel {
 
 	}
 
-	private void createCard(String sideA, String sideB) {
-		control.createACard(sideA, sideB);
-	}
-
 	private void fillScreen() {
 		
 		ArrayList<FlashCard> CardSet = control.getCurrentCardSet();
@@ -178,11 +181,9 @@ public class CardCreationScreen extends JPanel {
 		
 	}
 	
-	
-	int x = 0;
 	private void addCardCreationPanel(String ASideText, String BSideText) {
 		
-		x = x + 1;
+		panelsCreated = panelsCreated + 1;
 		cardCreationPanel = new JPanel();
 		addToPanelList(cardCreationPanel);
 		
@@ -251,10 +252,9 @@ public class CardCreationScreen extends JPanel {
 		
 		cardAddingPanel.add(cardCreationPanel);
 		
-		if(x<5) {
-			JFrame bla = (JFrame) this.getTopLevelAncestor();
-			bla.pack();
-			bla.setLocationRelativeTo(null);
+		if(panelsCreated<5) {
+			JFrame topFrame = (JFrame) this.getTopLevelAncestor();
+			topFrame.pack();
 		}
 		
 		cardASideText.grabFocus();
