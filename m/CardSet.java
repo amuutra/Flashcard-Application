@@ -1,7 +1,6 @@
 package m;
 
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.Observable;
 import java.util.Random;
 
@@ -35,7 +34,6 @@ public class CardSet extends Observable {
 		return result;
 	}
 	
-	//Returns the first card at the lowest learned level
 	public FlashCard getNextCard() {
 			
 		int lowestLevel = getCurrentLowestLevel();
